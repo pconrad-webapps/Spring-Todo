@@ -1,6 +1,9 @@
 # Spring-Todo
 An example of an online todo list using Springboot
 
+![Build Status](https://travis-ci.org/scottpchow23/Spring-Todo.svg?branch=master)
+
+
 VS Code Notes
 -------------
 
