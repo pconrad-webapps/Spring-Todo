@@ -37,4 +37,14 @@ public class GreetingControllerTests {
       .andExpect(status().isOk())
       .andExpect(content().string(containsString("This site is currently under construction.")));
   }
+
+  @Test
+  public void landingContentShouldExist() throws Exception {
+    mvc.perform(get("/").accept(
+      MediaType.TEXT_HTML
+    ))
+      .andExpect(content().string(containsString("todos")))
+      .andExpect(content().string(containsString("item 1")))
+      .andExpect(content().string(containsString("item 2")));
+  }
 }
