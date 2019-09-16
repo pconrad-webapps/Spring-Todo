@@ -3,6 +3,7 @@ An example of an online todo list using Springboot
 
 ![Build Status](https://travis-ci.org/scottpchow23/Spring-Todo.svg?branch=master)
 
+Check out the live version [here](https://spring-todo-ucsb.herokuapp.com/).
 
 VS Code Notes
 -------------
