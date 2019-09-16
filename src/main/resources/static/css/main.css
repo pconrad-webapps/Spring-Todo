@@ -1,0 +1,17 @@
+body {
+  width: 100%;
+  align-content: center;
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+}
+
+footer {
+  position: absolute;
+  margin-left: 10%;
+  bottom: 0;
+  width: 100%;
+}
+
+.main {
+  margin-left: 10%;
+  margin-top: 2%;
+}

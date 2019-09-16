@@ -30,4 +30,21 @@ public class GreetingControllerTests {
   public void greetingShouldCustomize() throws Exception {
     mvc.perform(get("/greeting").param("name", "Scott").accept(MediaType.TEXT_HTML)).andExpect(content().string(containsString("Hello, Scott!")));
   }
+
+  @Test
+  public void landingShouldSucceedAndExist() throws Exception {
+    mvc.perform(get("/").accept(MediaType.TEXT_HTML))
+      .andExpect(status().isOk())
+      .andExpect(content().string(containsString("This site is currently under construction.")));
+  }
+
+  @Test
+  public void landingContentShouldExist() throws Exception {
+    mvc.perform(get("/").accept(
+      MediaType.TEXT_HTML
+    ))
+      .andExpect(content().string(containsString("todos")))
+      .andExpect(content().string(containsString("item 1")))
+      .andExpect(content().string(containsString("item 2")));
+  }
 }
