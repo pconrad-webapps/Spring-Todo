@@ -1,4 +1,10 @@
 language: java
+
+sudo: required
+
+services:
+  - postgresql
+
 notifications:
   email:
     on_success: never

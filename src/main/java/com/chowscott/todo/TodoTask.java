@@ -14,6 +14,17 @@ public class TodoTask {
   private boolean complete;
 
   public TodoTask() {}
+  
+  public TodoTask(Long id, String name, boolean complete) {
+    this.id = id;
+    this.name = name;
+    this.complete = complete;
+  }
+  
+  public TodoTask(String name, boolean complete) {
+    this.name = name;
+    this.complete = complete;
+  }
 
   public TodoTask(String name) {
     this.name = name;
@@ -23,6 +34,14 @@ public class TodoTask {
   @Override
   public String toString() {
     return String.format("TodoTask[ id=%d | name='%s' | complete='%b' ", id, name, complete);
+  }
+
+  @Override
+  public boolean equals(Object obj) {
+    if (obj.getClass() != TodoTask.class) { return false; }
+    TodoTask task = (TodoTask) obj;
+
+    return id == task.id && name == task.name && complete == task.complete;
   }
 
   public String getName() {
