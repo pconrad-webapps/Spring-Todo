@@ -21,11 +21,13 @@
         </div>
       </form>
     </ul>
-    <form th:action="@{/update}" th:object="${items}" method="POST">
+    <form th:action="@{/update}" th:object="${items}" method="POST" id="todo-list">
       <ul th:each="todo, i : *{todoList}">
-          <input type="hidden" th:field="*{todoList[__${i.index}__].id}"/>
-          <input type="checkbox" th:checked="${todo.complete}" th:field="*{todoList[__${i.index}__].complete}" />
-          <label th:text="${todo.name}">task name</label><input type="hidden" th:field="*{todoList[__${i.index}__].name}"/>
+
+        <input type="hidden" th:field="*{todoList[__${i.index}__].id}"/>
+        <input type="checkbox" th:checked="${todo.complete}" th:field="*{todoList[__${i.index}__].complete}" />
+        <label th:text="${todo.name}" th:style="${todo.complete ? 'text-decoration: line-through;' : ''}" >task name</label><input type="hidden" th:field="*{todoList[__${i.index}__].name}"/>
+        <button type="button" class="btn btn-danger" th:data-id="${todo.id}" name="deleteItem">x</button>
       </ul>
       <button type="submit" class="btn btn-primary">update tasks</button>
     </form>
@@ -35,6 +37,9 @@
       <p>Hey there! This site is currently under construction. Check back in a bit and I'll have something more interesting waiting for you.</p>
   </footer>
 
+  <script src="webjars/jquery/3.4.1/jquery.min.js"></script>
+  <script src="js/main.js"></script>
   <script src="https://ajax.aspnetcdn.com/ajax/bootstrap/3.2.0/bootstrap.min.js"></script>
+
 </body>
 </html>

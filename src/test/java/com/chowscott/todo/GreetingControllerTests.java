@@ -12,8 +12,7 @@ import static org.mockito.BDDMockito.*;
 
 import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.not;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import java.util.ArrayList;
@@ -92,10 +91,16 @@ public class GreetingControllerTests {
       .param("todoList[1].name", "task 2")
       .param("todoList[1].complete", "true")
       .param("todoList[1].id", "2")
-      )
+    )
       .andExpect(status().is3xxRedirection());
     verify(this.repository, times(1)).save(new TodoTask(1L, "task 1", false));
     verify(this.repository, times(1)).save(new TodoTask(2L, "task 2", true));
+  }
 
+  @Test
+  public void landingFormDeleteTask() throws Exception {
+    mvc.perform(post("/delete/1"))
+      .andExpect(status().is3xxRedirection());
+    verify(this.repository, times(1)).deleteById(1L);
   }
 }
