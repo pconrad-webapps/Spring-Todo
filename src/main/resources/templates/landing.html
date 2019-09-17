@@ -4,26 +4,42 @@
     <title>Todos ✅</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <link href="css/main.css" rel="stylesheet">
-    <link href="css/bootstrap.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 </head>
 <body>
   <div class="main">
     <header>
       <h1 class="blah">todos</h1>
     </header>
-    
     <ul>
-        <input type="checkbox"/>
-        <label>item 1</label>
+      <form class="form-horizontal" th:action="@{/add}" th:object="${newItem}" method="POST">
+        <div class="input-group">
+          <input type="text" class="form-control todo-input" th:field="*{name}" placeholder="new task goes here"/>
+          <div class="input-group-btn">
+            <button type="submit" class="btn btn-primary">make</button>
+          </div>
+        </div>
+      </form>
     </ul>
-    <ul>
-        <input type="checkbox"/>
-        <label>item 2</label>
-    </ul>
+    <form th:action="@{/update}" th:object="${items}" method="POST" id="todo-list">
+      <ul th:each="todo, i : *{todoList}">
+
+        <input type="hidden" th:field="*{todoList[__${i.index}__].id}"/>
+        <input type="checkbox" th:checked="${todo.complete}" th:field="*{todoList[__${i.index}__].complete}" />
+        <label th:text="${todo.name}" th:style="${todo.complete ? 'text-decoration: line-through;' : ''}" >task name</label><input type="hidden" th:field="*{todoList[__${i.index}__].name}"/>
+        <button type="button" class="btn btn-danger" th:data-id="${todo.id}" name="deleteItem">x</button>
+      </ul>
+      <button type="submit" class="btn btn-primary">update tasks</button>
+    </form>
   </div>
 
   <footer>
       <p>Hey there! This site is currently under construction. Check back in a bit and I'll have something more interesting waiting for you.</p>
   </footer>
+
+  <script src="webjars/jquery/3.4.1/jquery.min.js"></script>
+  <script src="js/main.js"></script>
+  <script src="https://ajax.aspnetcdn.com/ajax/bootstrap/3.2.0/bootstrap.min.js"></script>
+
 </body>
 </html>
