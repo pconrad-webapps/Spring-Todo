@@ -5,6 +5,7 @@ build/
 !**/src/main/**
 !**/src/test/**
 bin/
+env.sh
 
 ### STS ###
 .apt_generated

@@ -6,9 +6,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.*;
 import org.springframework.http.MediaType;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
+
+
 import static org.mockito.BDDMockito.*;
+
 
 import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.not;
@@ -20,9 +25,10 @@ import java.util.ArrayList;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 
+
 @RunWith(SpringRunner.class)
 @WebMvcTest
-public class GreetingControllerTests {
+public class TodoTaskControllerTests {
 
   @MockBean
   private TodoTaskRepository repository;
@@ -30,16 +36,20 @@ public class GreetingControllerTests {
   private MockMvc mvc;
 
   @Test
+  @WithMockUser
   public void greetingShouldSucceed() throws Exception {
-    mvc.perform(get("/greeting").accept(MediaType.TEXT_HTML)).andExpect(status().isOk());
+    mvc.perform(get("/greeting")
+      .accept(MediaType.TEXT_HTML)).andExpect(status().isOk());
   }
 
   @Test
+  @WithMockUser
   public void greetingShouldCustomize() throws Exception {
     mvc.perform(get("/greeting").param("name", "Scott").accept(MediaType.TEXT_HTML)).andExpect(content().string(containsString("Hello, Scott!")));
   }
 
   @Test
+  @WithMockUser
   public void landingShouldSucceedAndExist() throws Exception {
     mvc.perform(get("/").accept(MediaType.TEXT_HTML))
       .andExpect(status().isOk())
@@ -47,6 +57,7 @@ public class GreetingControllerTests {
   }
 
   @Test
+  @WithMockUser
   public void landingForm() throws Exception {
     ArrayList<TodoTask> todoList = new ArrayList<TodoTask>();
     todoList.add(new TodoTask("task 1"));
@@ -60,17 +71,18 @@ public class GreetingControllerTests {
       .andExpect(content().string(containsString("new task goes here")))
       .andExpect(content().string(containsString("make")))
       .andExpect(content().string(containsString("task 1")))
-      .andExpect(content().string(containsString("task 2")))
-      .andExpect(content().string(containsString("update tasks")));
+      .andExpect(content().string(containsString("task 2")));
   }
 
   @Test
+  @WithMockUser
   public void landingFormCreateTask() throws Exception {
     mvc.perform(get("/").accept(
       MediaType.TEXT_HTML
     ))
       .andExpect(content().string(not(containsString("task 1"))));
     mvc.perform(post("/add")
+      .with(csrf().asHeader())
       .contentType(MediaType.APPLICATION_FORM_URLENCODED)
       .param("name", "task 1")
       .accept(
@@ -81,9 +93,11 @@ public class GreetingControllerTests {
   }
 
   @Test
+  @WithMockUser
 
   public void landingFormUpdateTasks() throws Exception {
     mvc.perform(post("/update")
+      .with(csrf().asHeader())
       .contentType(MediaType.APPLICATION_FORM_URLENCODED)
       .param("todoList[0].name", "task 1")
       .param("todoList[0].complete", "false")
@@ -98,8 +112,9 @@ public class GreetingControllerTests {
   }
 
   @Test
+  @WithMockUser
   public void landingFormDeleteTask() throws Exception {
-    mvc.perform(post("/delete/1"))
+    mvc.perform(post("/delete/1").with(csrf().asHeader()))
       .andExpect(status().is3xxRedirection());
     verify(this.repository, times(1)).deleteById(1L);
   }
