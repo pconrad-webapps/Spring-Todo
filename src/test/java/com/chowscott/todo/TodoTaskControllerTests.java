@@ -40,21 +40,21 @@ public class TodoTaskControllerTests {
 
   @Test
   @WithMockUser(value = "1234")
-  public void landingShouldSucceedAndExist() throws Exception {
+  public void error() throws Exception {
+    mvc.perform(get("/error").accept(MediaType.TEXT_HTML)).andExpect(status().isOk())
+        .andExpect(content().string(containsString("well this is awkward")));
+  }
+  
+  @Test
+  @WithMockUser(value = "1234")
+  public void indexShouldSucceedAndExist() throws Exception {
     mvc.perform(get("/").accept(MediaType.TEXT_HTML)).andExpect(status().isOk())
         .andExpect(content().string(containsString("This site is currently under construction.")));
   }
 
   @Test
   @WithMockUser(value = "1234")
-  public void error() throws Exception {
-    mvc.perform(get("/error").accept(MediaType.TEXT_HTML)).andExpect(status().isOk())
-        .andExpect(content().string(containsString("well this is awkward")));
-  }
-
-  @Test
-  @WithMockUser(value = "1234")
-  public void landingForm() throws Exception {
+  public void indexForm() throws Exception {
     ArrayList<TodoTask> todoList = new ArrayList<TodoTask>();
     todoList.add(new TodoTask("task 1", 1234L));
     todoList.add(new TodoTask("task 2", 1234L));
@@ -68,7 +68,7 @@ public class TodoTaskControllerTests {
 
   @Test
   @WithMockUser(value = "1234")
-  public void landingFormFilter() throws Exception {
+  public void indexFormFilter() throws Exception {
     ArrayList<TodoTask> todoList = new ArrayList<TodoTask>();
     todoList.add(new TodoTask("task 1", 1234L));
     todoList.add(new TodoTask("task 2", 1111L));
@@ -82,7 +82,7 @@ public class TodoTaskControllerTests {
 
   @Test
   @WithMockUser(value = "1234")
-  public void landingFormCreateTask() throws Exception {
+  public void indexFormCreateTask() throws Exception {
     given(userRepo.findById(1234L)).willReturn(Optional.of(new User(1234L, "test user")));
     mvc.perform(get("/").accept(MediaType.TEXT_HTML)).andExpect(content().string(not(containsString("task 1"))));
     mvc.perform(post("/add").with(csrf().asHeader()).contentType(MediaType.APPLICATION_FORM_URLENCODED)
@@ -92,7 +92,7 @@ public class TodoTaskControllerTests {
 
   @Test
   @WithMockUser(value = "1234")
-  public void landingFormUpdateSpecificTask() throws Exception {
+  public void indexFormUpdateSpecificTask() throws Exception {
     given(userRepo.findById(1234L)).willReturn(Optional.of(new User(1234L, "test user")));
     given(this.repository.findById(1L)).willReturn(Optional.of(new TodoTask(1L, "task 1", false)));
     mvc.perform(post("/update").with(csrf().asHeader()).contentType(MediaType.APPLICATION_FORM_URLENCODED)
@@ -104,7 +104,7 @@ public class TodoTaskControllerTests {
 
   @Test
   @WithMockUser(value = "1234")
-  public void landingFormDeleteSpecificTask() throws Exception {
+  public void indexFormDeleteSpecificTask() throws Exception {
     given(userRepo.findById(1234L)).willReturn(Optional.of(new User(1234L, "test user")));
     mvc.perform(post("/update").with(csrf().asHeader()).contentType(MediaType.APPLICATION_FORM_URLENCODED)
         .param("removeId", "1")).andExpect(status().is3xxRedirection());

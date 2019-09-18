@@ -39,7 +39,7 @@ public class TodoTaskController implements ErrorController {
 
   @Override
   public String getErrorPath() {
-      return "/error";
+    return "/error";
   }
 
   @RequestMapping("/error")
@@ -48,7 +48,7 @@ public class TodoTaskController implements ErrorController {
   }
 
   @GetMapping(value = "/")
-  public String landing(Principal principal, Model model) {
+  public String index(Principal principal, Model model) {
     Long userId = getUserId(principal);
     if (principal instanceof OAuth2AuthenticationToken) {
       Map<String, Object> attributes = ((OAuth2AuthenticationToken) principal).getPrincipal().getAttributes();

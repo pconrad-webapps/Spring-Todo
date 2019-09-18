@@ -12,7 +12,12 @@
 <body>
   <div class="container main">
     <header>
-      <h1 class="blah">todos</h1>
+      <div>
+        <h1 class="blah" style="float : left;">todos</h1>
+        <form th:action="@{/logout}" method="POST" style="float : right;">
+          <button type="submit" class="btn btn-warning">logout</button>
+        </form>
+      </div>
     </header>
     <ul>
       <form class="form-horizontal" th:action="@{/add}" th:object="${newItem}" method="POST">
