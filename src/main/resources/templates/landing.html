@@ -28,7 +28,6 @@
       <ul th:each="todo, i : *{todoList}">
         <button type="button submit" class="btn btn-secondary"
           th:text="${todo.complete ? 'Complete ✅' : 'Incomplete ⭕️'}" th:value="${todo.id}" name="updateId" />
-        <label th:text="${todo.id}" />
         <label th:text="${todo.name}" th:style="${todo.complete ? 'text-decoration: line-through;' : ''}">task
           name</label>
         <button type="button submit" class="btn btn-danger" th:value="${todo.id}" name="removeId">x</button>
