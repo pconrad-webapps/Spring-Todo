@@ -8,7 +8,8 @@ public class TodoTaskResource {
   @Valid
   private ArrayList<TodoTask> todoList = new ArrayList<>();
 
-  public TodoTaskResource() {}
+  public TodoTaskResource() {
+  }
 
   public TodoTaskResource(ArrayList<TodoTask> todoList) {
     this.todoList = todoList;

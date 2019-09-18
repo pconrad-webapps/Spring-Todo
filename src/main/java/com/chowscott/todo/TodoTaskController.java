@@ -3,7 +3,6 @@ package com.chowscott.todo;
 import java.security.Principal;
 import java.util.ArrayList;
 
-import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
