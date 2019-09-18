@@ -47,6 +47,13 @@ public class TodoTaskControllerTests {
 
   @Test
   @WithMockUser(value = "1234")
+  public void error() throws Exception {
+    mvc.perform(get("/error").accept(MediaType.TEXT_HTML)).andExpect(status().isOk())
+        .andExpect(content().string(containsString("well this is awkward")));
+  }
+
+  @Test
+  @WithMockUser(value = "1234")
   public void landingForm() throws Exception {
     ArrayList<TodoTask> todoList = new ArrayList<TodoTask>();
     todoList.add(new TodoTask("task 1", 1234L));
