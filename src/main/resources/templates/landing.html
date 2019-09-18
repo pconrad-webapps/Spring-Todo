@@ -26,11 +26,11 @@
     </ul>
     <form th:action="@{/update}" th:object="${items}" method="POST" id="todo-list">
       <ul th:each="todo, i : *{todoList}">
-        <input type="hidden" th:field="*{todoList[__${i.index}__].id}" />
-        <input type="checkbox" th:checked="${todo.complete}" th:value="${todo.id}" name="updateId"
-          onchange="this.form.submit()" />
+        <button type="button submit" class="btn btn-secondary"
+          th:text="${todo.complete ? 'Complete ✅' : 'Incomplete ⭕️'}" th:value="${todo.id}" name="updateId" />
+        <label th:text="${todo.id}" />
         <label th:text="${todo.name}" th:style="${todo.complete ? 'text-decoration: line-through;' : ''}">task
-          name</label><input type="hidden" th:field="*{todoList[__${i.index}__].name}" />
+          name</label>
         <button type="button submit" class="btn btn-danger" th:value="${todo.id}" name="removeId">x</button>
       </ul>
     </form>
