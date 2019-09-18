@@ -36,10 +36,10 @@ public class TodoTaskController {
   }
 
   @GetMapping(value = "/")
-  public String landing(Principal user, Model model) {
-    Long userId = getUserId(user);
-    if (user instanceof OAuth2AuthenticationToken) {
-      Map<String, Object> attributes = ((OAuth2AuthenticationToken) user).getPrincipal().getAttributes();
+  public String landing(Principal principal, Model model) {
+    Long userId = getUserId(principal);
+    if (principal instanceof OAuth2AuthenticationToken) {
+      Map<String, Object> attributes = ((OAuth2AuthenticationToken) principal).getPrincipal().getAttributes();
       String name = (String) attributes.get("name");
       User userObj = new User(userId, name);
       userRepo.save(userObj);
