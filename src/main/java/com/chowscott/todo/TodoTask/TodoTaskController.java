@@ -60,7 +60,7 @@ public class TodoTaskController implements ErrorController {
     todoList.removeIf(todo -> !todo.getUserId().equals(userId));
     model.addAttribute("items", new TodoTaskResource(todoList));
     model.addAttribute("newItem", new TodoTask());
-    return "landing";
+    return "index";
   }
 
   @PostMapping(value = "/add")
