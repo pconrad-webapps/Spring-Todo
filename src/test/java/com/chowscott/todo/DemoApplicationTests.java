@@ -12,6 +12,7 @@ public class DemoApplicationTests {
 
 	@MockBean
 	private TodoTaskRepository repository;
+
 	@Test
 	public void contextLoads() {
 	}

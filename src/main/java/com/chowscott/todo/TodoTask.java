@@ -13,14 +13,15 @@ public class TodoTask {
   private String name;
   private boolean complete;
 
-  public TodoTask() {}
-  
+  public TodoTask() {
+  }
+
   public TodoTask(Long id, String name, boolean complete) {
     this.id = id;
     this.name = name;
     this.complete = complete;
   }
-  
+
   public TodoTask(String name, boolean complete) {
     this.name = name;
     this.complete = complete;
@@ -38,7 +39,9 @@ public class TodoTask {
 
   @Override
   public boolean equals(Object obj) {
-    if (obj.getClass() != TodoTask.class) { return false; }
+    if (obj.getClass() != TodoTask.class) {
+      return false;
+    }
     TodoTask task = (TodoTask) obj;
 
     return id == task.id && name == task.name && complete == task.complete;
