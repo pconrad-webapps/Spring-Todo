@@ -1,5 +1,6 @@
-package com.chowscott.todo;
+package com.chowscott.todo.TodoTask;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -10,8 +11,13 @@ public class TodoTask {
   @Id
   @GeneratedValue(strategy = GenerationType.AUTO)
   private Long id;
+  @Column(nullable = false)
   private String name;
+  @Column(nullable = false)
   private boolean complete;
+
+  @Column(nullable = false)
+  private Long userId;
 
   public TodoTask() {
   }
@@ -20,6 +26,12 @@ public class TodoTask {
     this.id = id;
     this.name = name;
     this.complete = complete;
+  }
+
+  public TodoTask(String name, Long userId) {
+    this.name = name;
+    this.userId = userId;
+    this.complete = false;
   }
 
   public TodoTask(String name, boolean complete) {
@@ -69,6 +81,14 @@ public class TodoTask {
 
   public void setId(Long id) {
     this.id = id;
+  }
+
+  public Long getUserId() {
+    return userId;
+  }
+
+  public void setUserId(Long id) {
+    this.userId = id;
   }
 
 }
