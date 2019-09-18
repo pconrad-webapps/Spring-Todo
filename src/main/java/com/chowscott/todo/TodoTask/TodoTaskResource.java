@@ -1,4 +1,4 @@
-package com.chowscott.todo;
+package com.chowscott.todo.TodoTask;
 
 import java.util.ArrayList;
 
