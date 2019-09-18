@@ -11,15 +11,17 @@ import com.chowscott.todo.User.User;
 import com.chowscott.todo.User.UserRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.web.servlet.error.ErrorController;
 import org.springframework.security.oauth2.client.authentication.OAuth2AuthenticationToken;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
-public class TodoTaskController {
+public class TodoTaskController implements ErrorController {
 
   @Autowired
   private UserRepository userRepo;
@@ -33,6 +35,16 @@ public class TodoTaskController {
 
   private Long getUserId(Principal principal) {
     return Long.valueOf(principal.getName());
+  }
+
+  @Override
+  public String getErrorPath() {
+      return "/error";
+  }
+
+  @RequestMapping("/error")
+  public String handleError() {
+    return "error";
   }
 
   @GetMapping(value = "/")
