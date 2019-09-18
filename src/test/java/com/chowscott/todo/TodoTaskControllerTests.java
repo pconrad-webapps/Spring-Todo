@@ -34,19 +34,6 @@ public class TodoTaskControllerTests {
 
   @Test
   @WithMockUser
-  public void greetingShouldSucceed() throws Exception {
-    mvc.perform(get("/greeting").accept(MediaType.TEXT_HTML)).andExpect(status().isOk());
-  }
-
-  @Test
-  @WithMockUser
-  public void greetingShouldCustomize() throws Exception {
-    mvc.perform(get("/greeting").param("name", "Scott").accept(MediaType.TEXT_HTML))
-        .andExpect(content().string(containsString("Hello, Scott!")));
-  }
-
-  @Test
-  @WithMockUser
   public void landingShouldSucceedAndExist() throws Exception {
     mvc.perform(get("/").accept(MediaType.TEXT_HTML)).andExpect(status().isOk())
         .andExpect(content().string(containsString("This site is currently under construction.")));
@@ -77,25 +64,6 @@ public class TodoTaskControllerTests {
 
   @Test
   @WithMockUser
-
-  public void landingFormUpdateTasks() throws Exception {
-    mvc.perform(post("/update").with(csrf().asHeader()).contentType(MediaType.APPLICATION_FORM_URLENCODED)
-        .param("todoList[0].name", "task 1").param("todoList[0].complete", "false").param("todoList[0].id", "1")
-        .param("todoList[1].name", "task 2").param("todoList[1].complete", "true").param("todoList[1].id", "2"))
-        .andExpect(status().is3xxRedirection());
-    verify(this.repository, times(1)).save(new TodoTask(1L, "task 1", false));
-    verify(this.repository, times(1)).save(new TodoTask(2L, "task 2", true));
-  }
-
-  @Test
-  @WithMockUser
-  public void landingFormDeleteTask() throws Exception {
-    mvc.perform(post("/delete/1").with(csrf().asHeader())).andExpect(status().is3xxRedirection());
-    verify(this.repository, times(1)).deleteById(1L);
-  }
-
-  @Test
-  @WithMockUser
   public void landingFormUpdateSpecificTask() throws Exception {
     given(this.repository.findById(1L)).willReturn(Optional.of(new TodoTask(1L, "task 1", false)));
     mvc.perform(post("/update").with(csrf().asHeader()).contentType(MediaType.APPLICATION_FORM_URLENCODED)
@@ -111,5 +79,14 @@ public class TodoTaskControllerTests {
     mvc.perform(post("/update").with(csrf().asHeader()).contentType(MediaType.APPLICATION_FORM_URLENCODED)
         .param("removeId", "1")).andExpect(status().is3xxRedirection());
     verify(this.repository, times(1)).deleteById(1L);
+  }
+
+  @Test
+  @WithMockUser
+  public void updateTodoRemoveIdPrecendence() throws Exception {
+    mvc.perform(post("/update").with(csrf().asHeader()).contentType(MediaType.APPLICATION_FORM_URLENCODED)
+        .param("removeId", "1").param("updateId", "1")).andExpect(status().is3xxRedirection());
+    verify(this.repository, times(1)).deleteById(1L);
+    verify(this.repository, never()).save(any());
   }
 }
