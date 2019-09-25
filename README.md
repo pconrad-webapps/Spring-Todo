@@ -17,3 +17,5 @@ Use of the following extensions is highly recommended:
   * `Spring Boot Dashboard`
 
 Note: all can be collectively downloaded via the `Spring Boot Extension Pack` (which bundles all 4 together).
+
+In order to set environment variables while running application locally, set them in `.vscode/launch.json` file.
