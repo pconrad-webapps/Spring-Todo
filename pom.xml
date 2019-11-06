@@ -1,6 +1,5 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" 
-    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<?xml version="1.0" encoding="UTF-8" ?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 
     <!-- (0) <modelVersion/> -->
     <modelVersion>4.0.0</modelVersion>
@@ -47,6 +46,12 @@
 
 
     <dependencies>
+        <!-- https://stackoverflow.com/questions/52512058/spring-boot-fails-due-to-a-hibernate-error-after-migrating-to-jdk-11 -->
+        <dependency>
+            <groupId>org.javassist</groupId>
+            <artifactId>javassist</artifactId>
+            <version>3.23.1-GA</version>
+        </dependency>
         <!-- https://mvnrepository.com/artifact/org.postgresql/postgresql -->
         <dependency>
             <groupId>org.postgresql</groupId>
@@ -173,15 +178,6 @@
     </build>
     <!-- (27) <reporting/> -->
     <!-- (28) <profiles/> -->
-
-
-
-
-
-
-
-
-
 
 
 </project>
